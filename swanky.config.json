@@ -1,6 +1,6 @@
 {
   "node": {
-    "localPath": "packages/bin/swanky-node",
+    "localPath": "packages/swanky-node/swanky-node",
     "polkadotPalletVersions": "polkadot-v0.9.37",
     "supportedInk": "v4.0.0"
   },
