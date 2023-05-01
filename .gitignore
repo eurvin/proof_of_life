@@ -40,3 +40,6 @@ dist
 # coverage
 coverage
 coverage.json
+
+# intellij config files
+.idea
