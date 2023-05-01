@@ -40,3 +40,10 @@ dist
 # coverage
 coverage
 coverage.json
+
+# intellij config files
+.idea
+
+# swanky config file and folder
+swanky-node
+swanky.config.json
