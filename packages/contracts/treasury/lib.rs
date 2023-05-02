@@ -8,7 +8,7 @@ mod treasury {
     /// Defines the storage of your contract.
     /// This shows addresses / AccountIds and how much they've deposited, as a key/value pair
     #[ink(storage)]
-    pub struct PolTreasury {
+    pub struct Treasury {
         /// Assign a balance to every account
         balances: Mapping<AccountId, Balance>,
         tvl: u128,
@@ -32,7 +32,7 @@ mod treasury {
         amount: Option<u128>,
     }
 
-    // The PolTreasury error types.
+    // The Treasury error types.
     #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
     #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
     pub enum Error {
@@ -42,7 +42,7 @@ mod treasury {
         NoFunds,
     }
 
-    impl PolTreasury {
+    impl Treasury {
         //from https://use.ink/macros-attributes/contract
         //Note that ink! constructors are always implicitly payable and thus
         //  cannot be flagged as such.
@@ -141,37 +141,37 @@ mod treasury {
         /// We test if the default constructor does its job.
         #[ink::test]
         fn new_works() {
-            let pol_treasury = PolTreasury::new();
-            assert_eq!(pol_treasury.tvl, 0);
+            let treasury = Treasury::new();
+            assert_eq!(treasury.tvl, 0);
         }
 
         // Test deposit / withdraw of our contract.
         /*
         #[ink::test]
         fn it_works() {
-            let mut pol_treasury = PolTreasury::new();
-            pol_treasury.deposit(100);
-            assert_eq!(pol_treasury.get_balance(), 100);
-            pol_treasury.withdraw(50);
-            assert_eq!(pol_treasury.get_balance(), 50);
+            let mut treasury = Treasury::new();
+            treasury.deposit(100);
+            assert_eq!(treasury.get_balance(), 100);
+            treasury.withdraw(50);
+            assert_eq!(treasury.get_balance(), 50);
         }*/
 
         // We test if deposits works
 
         #[ink::test]
         fn deposit_event_works() {
-            let mut pol_treasury = PolTreasury::new();
-            pol_treasury.deposit();
-            assert_eq!(pol_treasury.get_balance(), Some(0));
+            let mut treasury = Treasury::new();
+            treasury.deposit();
+            assert_eq!(treasury.get_balance(), Some(0));
             let emitted_events = ink::env::test::recorded_events().count();
             assert_eq!(emitted_events, 1);
         }
 
         #[ink::test]
         fn returns_error_if_withdraw_0_funds() {
-            let mut pol_treasury = PolTreasury::new();
-            pol_treasury.deposit();
-            assert_eq!(pol_treasury.withdraw_all(), Err(Error::NoFunds));
+            let mut treasury = Treasury::new();
+            treasury.deposit();
+            assert_eq!(treasury.withdraw_all(), Err(Error::NoFunds));
         }
     }
 }
