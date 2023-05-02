@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -eu
+#!/usr/bin/env bash
 
 # NOTE: Add contracts to this array to test them ⬇️
 # IMPORTANT: Just use spaces (_no commas_) between multiple array items (it's a bash convention).

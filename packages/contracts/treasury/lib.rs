@@ -110,15 +110,25 @@ mod treasury {
         pub fn withdraw(&mut self, transfer_amt: Balance) -> u128 {
             let caller = self.env().caller();
             let balance = self.balances.get(caller).unwrap();
+            let mut _message =
+                ink_prelude::format!("Thank you {:?} for withdrawing {:?}", caller, &transfer_amt);
+            self.balances.remove(caller);
             if transfer_amt >= balance {
-                self.balances.remove(caller);
+                _message = ink_prelude::format!(
+                    "Thank you {:?} for withdrawing full balance of {:?}",
+                    caller,
+                    balance
+                );
                 self.env().transfer(caller, balance).unwrap();
                 self.tvl -= balance;
             } else {
                 //there is some balance remaining
+                let remaining_bal = balance - transfer_amt;
+                self.balances.insert(caller, &remaining_bal);
                 self.env().transfer(caller, transfer_amt).unwrap();
                 self.tvl -= transfer_amt;
             }
+            ink::env::debug_println!("{}", &_message);
             self.env().emit_event(SuccessfulWithdrawl {
                 from: Some(caller),
                 amount: Some(balance),
@@ -133,8 +143,8 @@ mod treasury {
     /// The below code is technically just normal Rust code.
     #[cfg(test)]
     mod tests {
-        use ink::env::test::*;
         use ink::env::pay_with_call;
+        use ink::env::test::*;
 
         /// Imports all the definitions from the outer scope so we can use them here.
         use super::*;
@@ -156,9 +166,8 @@ mod treasury {
         /// get_balance should return None if user doesn't have a balance.
         #[ink::test]
         fn deposit_and_get_balance_works() {
-        let mut treasury = Treasury::new();
-            let accounts =
-                ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+            let mut treasury = Treasury::new();
+            let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
 
             // Set the contract as callee and Bob as caller.
             let contract = ink::env::account_id::<ink::env::DefaultEnvironment>();
@@ -196,6 +205,68 @@ mod treasury {
             let mut treasury = Treasury::new();
             treasury.deposit();
             assert_eq!(treasury.withdraw_all(), Err(Error::NoFunds));
+        }
+
+        /// Having tested deposit, use deposit to have something to 100 from Bob.
+        /// Withdraw 60 and verify that 1) 40 is left, 2) Bob is credited
+        #[ink::test]
+        fn withdraw_works() {
+            let mut treasury = Treasury::new();
+            let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Set the contract as callee and Alice as caller.
+            let contract = ink::env::account_id::<ink::env::DefaultEnvironment>();
+            set_callee::<ink::env::DefaultEnvironment>(contract);
+            set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+
+            let init_contract_balance = ink::env::balance::<ink::env::DefaultEnvironment>();
+            let init_balance_alice =
+                get_account_balance::<ink::env::DefaultEnvironment>(accounts.alice);
+            //starting balances
+            assert_eq!(init_balance_alice, Ok(1_000_000));
+            assert_eq!(init_contract_balance, 1_000_000);
+            assert_eq!(treasury.get_balance(), None);
+            //transfer in via deposit
+
+            set_callee::<ink::env::DefaultEnvironment>(contract);
+            set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+
+            pay_with_call!(treasury.deposit(), 400);
+            advance_block::<ink::env::DefaultEnvironment>();
+
+            let post_dep_contract_balance = ink::env::balance::<ink::env::DefaultEnvironment>();
+            let post_dep_balance_alice =
+                get_account_balance::<ink::env::DefaultEnvironment>(accounts.alice);
+            //post-deposit balances
+            assert_eq!(post_dep_balance_alice, Ok(1_000_400));
+            assert_eq!(post_dep_contract_balance, 1_000_400);
+            assert_eq!(treasury.get_balance(), Some(400));
+
+            set_callee::<ink::env::DefaultEnvironment>(contract);
+            set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
+
+            let remaining_user_bal = pay_with_call!(treasury.withdraw(300), 50);
+            advance_block::<ink::env::DefaultEnvironment>();
+            let post_withdrawal_contract_balance =
+                ink::env::balance::<ink::env::DefaultEnvironment>();
+            let post_withdrawal_balance_alice =
+                get_account_balance::<ink::env::DefaultEnvironment>(accounts.alice);
+            assert_eq!(remaining_user_bal, 100);
+            assert_eq!(post_withdrawal_balance_alice, Ok(1_000_750));
+            assert_eq!(post_withdrawal_contract_balance, 1_000_750);
+            assert_eq!(treasury.get_balance(), Some(100));
+
+            /*
+            let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+
+            assert_eq!(new_balance_bob, Ok(900));
+            assert_eq!(emitted_events.len(), 1);
+            assert_eq!(new_contract_balance, 1000100);
+            // calls get balance with Bob and asserts 100 is credited to his account
+            assert_eq!(treasury.get_balance(), Some(100));
+
+            //now that the account has 100 in Bob's name, test withdraw
+            pay_with_call!(treasury.withdraw(), 100); */
         }
     }
 }
