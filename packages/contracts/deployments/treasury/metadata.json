@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0xe8a2408135fe1891e0f0d0a9187b3dc92f595933c40f6aad4cd8893f62254bed",
+    "hash": "0xbb74e4b3b79d9daf18b4295d4c0217a206e0a7fdf79e654e8f2c9600001a7397",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -256,11 +256,11 @@
                 "root": {
                   "layout": {
                     "leaf": {
-                      "key": "0xd9862b80",
+                      "key": "0xe934280c",
                       "ty": 0
                     }
                   },
-                  "root_key": "0xd9862b80"
+                  "root_key": "0xe934280c"
                 }
               },
               "name": "balances"
@@ -275,7 +275,7 @@
               "name": "tvl"
             }
           ],
-          "name": "PolTreasury"
+          "name": "Treasury"
         }
       },
       "root_key": "0x00000000"

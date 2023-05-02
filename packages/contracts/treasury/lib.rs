@@ -133,31 +133,55 @@ mod treasury {
     /// The below code is technically just normal Rust code.
     #[cfg(test)]
     mod tests {
-        use ink::env::test::EmittedEvent;
+        use ink::env::test::*;
+        use ink::env::pay_with_call;
 
         /// Imports all the definitions from the outer scope so we can use them here.
         use super::*;
 
-        /// We test if the default constructor does its job.
+        /// We test if the new constructor does its job.
         #[ink::test]
         fn new_works() {
             let treasury = Treasury::new();
             assert_eq!(treasury.tvl, 0);
         }
 
-        // Test deposit / withdraw of our contract.
-        /*
+        /// We test if the default constructor does its job.
         #[ink::test]
-        fn it_works() {
-            let mut treasury = Treasury::new();
-            treasury.deposit(100);
-            assert_eq!(treasury.get_balance(), 100);
-            treasury.withdraw(50);
-            assert_eq!(treasury.get_balance(), 50);
-        }*/
+        fn default_works() {
+            let treasury = Treasury::default();
+            assert_eq!(treasury.tvl, 0);
+        }
+
+        /// get_balance should return None if user doesn't have a balance.
+        #[ink::test]
+        fn deposit_and_get_balance_works() {
+        let mut treasury = Treasury::new();
+            let accounts =
+                ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
+
+            // Set the contract as callee and Bob as caller.
+            let contract = ink::env::account_id::<ink::env::DefaultEnvironment>();
+            set_callee::<ink::env::DefaultEnvironment>(contract);
+            set_caller::<ink::env::DefaultEnvironment>(accounts.bob);
+
+            pay_with_call!(treasury.deposit(), 90);
+
+            let new_contract_balance = ink::env::balance::<ink::env::DefaultEnvironment>();
+            let new_balance_bob = get_account_balance::<ink::env::DefaultEnvironment>(accounts.bob);
+
+            let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+
+            assert_eq!(new_balance_bob, Ok(910));
+            assert_eq!(emitted_events.len(), 1);
+            assert_eq!(new_contract_balance, 1000090);
+            // calls get balance with Bob and asserts 90 is credited to his account
+            assert_eq!(treasury.get_balance(), Some(90));
+        }
 
         // We test if deposits works
 
+        /// We test if the deposit event gets emitted.
         #[ink::test]
         fn deposit_event_works() {
             let mut treasury = Treasury::new();
