@@ -1,11 +1,11 @@
 {
   "source": {
-    "hash": "0xf881b07d2405850ede222d9f19576e9c910f372791adbff8ce79a3345813d108",
-    "language": "ink! 4.0.0",
-    "compiler": "rustc 1.67.0",
+    "hash": "0x27ad8ca0307186dec4cab1860307cc6b182d0abc99f02f3f7989ec12b09af916",
+    "language": "ink! 4.2.0",
+    "compiler": "rustc 1.69.0",
     "build_info": {
       "build_mode": "Release",
-      "cargo_contract_version": "2.0.0",
+      "cargo_contract_version": "2.1.0",
       "rust_toolchain": "stable-aarch64-apple-darwin",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
@@ -17,7 +17,7 @@
     "name": "greeter",
     "version": "0.0.1",
     "authors": [
-      "Scio Labs <hello@scio.xyz>"
+      "Escgrow <eurvin@gmail.com>"
     ]
   },
   "spec": {
@@ -34,6 +34,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [
           "Creates a new greeter contract initialized with the given value."
         ],
@@ -50,6 +51,7 @@
       },
       {
         "args": [],
+        "default": false,
         "docs": [
           "Creates a new greeter contract initialized to 'Hello ink!'."
         ],
@@ -66,6 +68,45 @@
       }
     ],
     "docs": [],
+    "environment": {
+      "accountId": {
+        "displayName": [
+          "AccountId"
+        ],
+        "type": 6
+      },
+      "balance": {
+        "displayName": [
+          "Balance"
+        ],
+        "type": 9
+      },
+      "blockNumber": {
+        "displayName": [
+          "BlockNumber"
+        ],
+        "type": 12
+      },
+      "chainExtension": {
+        "displayName": [
+          "ChainExtension"
+        ],
+        "type": 13
+      },
+      "hash": {
+        "displayName": [
+          "Hash"
+        ],
+        "type": 10
+      },
+      "maxEventTopics": 4,
+      "timestamp": {
+        "displayName": [
+          "Timestamp"
+        ],
+        "type": 11
+      }
+    },
     "events": [
       {
         "args": [
@@ -106,6 +147,7 @@
     "messages": [
       {
         "args": [],
+        "default": false,
         "docs": [
           " Returns the current value of `message`."
         ],
@@ -133,6 +175,7 @@
             }
           }
         ],
+        "default": false,
         "docs": [
           " Sets `message` to the given value."
         ],
@@ -361,6 +404,63 @@
         "def": {
           "primitive": "u8"
         }
+      }
+    },
+    {
+      "id": 9,
+      "type": {
+        "def": {
+          "primitive": "u128"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": {
+        "def": {
+          "composite": {
+            "fields": [
+              {
+                "type": 7,
+                "typeName": "[u8; 32]"
+              }
+            ]
+          }
+        },
+        "path": [
+          "ink_primitives",
+          "types",
+          "Hash"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "type": {
+        "def": {
+          "primitive": "u64"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "type": {
+        "def": {
+          "primitive": "u32"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "type": {
+        "def": {
+          "variant": {}
+        },
+        "path": [
+          "ink_env",
+          "types",
+          "NoChainExtension"
+        ]
       }
     }
   ],

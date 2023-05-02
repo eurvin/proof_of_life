@@ -1,12 +1,11 @@
 [package]
 name = "greeter"
 version = "0.0.1"
-authors = ["Scio Labs <hello@scio.xyz>"]
+authors = ["Escgrow <eurvin@gmail.com>"]
 edition = "2021"
 
 [dependencies]
 ink = { version = "4.0.0", default-features = false }
-ink_prelude = { version = "4.2.0", default-features = false }
 
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
 scale-info = { version = "2", default-features = false, features = ["derive"], optional = true }
