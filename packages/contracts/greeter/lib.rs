@@ -10,7 +10,6 @@ mod pol_treasury {
     #[ink(storage)]
     pub struct PolTreasury {
         /// Assign a balance to every account
-        owner: AccountId,
         balances: Mapping<AccountId, Balance>,
         tvl: u128,
     }
@@ -39,8 +38,8 @@ mod pol_treasury {
     pub enum Error {
         /// Returned if there are unsufficient funds to withdraw
         NotEnoughFunds,
-        /// Returned if someone but the owner and the approved account tries to withdraw
-        NoWithdrawlPermission,
+        /// Returned if the caller doesn't have a balance
+        NoFunds,
     }
 
     impl PolTreasury {
@@ -48,15 +47,10 @@ mod pol_treasury {
         //Note that ink! constructors are always implicitly payable and thus
         //  cannot be flagged as such.
         #[ink(constructor)] //#[ink(constructor, payable)]
-        pub fn new(owner: AccountId) -> Self {
-            let owner = owner;
+        pub fn new() -> Self {
             let balances = Mapping::default();
             let tvl: u128 = 0;
-            Self {
-                owner,
-                balances,
-                tvl,
-            }
+            Self { balances, tvl }
         }
 
         /// Retrieve the balance of the caller.
@@ -91,10 +85,10 @@ mod pol_treasury {
         #[ink(message)]
         pub fn withdraw_all(&mut self) -> Result<(), Error> {
             let caller = self.env().caller();
-            if caller != self.owner {
-                return Err(Error::NoWithdrawlPermission);
+            let balance = self.balances.get(caller).unwrap_or(0);
+            if balance == 0 {
+                return Err(Error::NoFunds);
             }
-            let balance = self.balances.get(caller).unwrap();
             self.balances.remove(caller);
             self.env().transfer(caller, balance).unwrap();
             self.tvl -= balance;
@@ -142,8 +136,7 @@ mod pol_treasury {
         /// We test if the default constructor does its job.
         #[ink::test]
         fn new_works() {
-            let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
-            let pol_treasury = PolTreasury::new(accounts.alice);
+            let pol_treasury = PolTreasury::new();
             assert_eq!(pol_treasury.tvl, 0);
         }
 
@@ -162,12 +155,18 @@ mod pol_treasury {
 
         #[ink::test]
         fn deposit_event_works() {
-            let accounts = ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
-            let mut pol_treasury = PolTreasury::new(accounts.alice);
+            let mut pol_treasury = PolTreasury::new();
             pol_treasury.deposit();
             assert_eq!(pol_treasury.get_balance(), Some(0));
             let emitted_events = ink::env::test::recorded_events().count();
             assert_eq!(emitted_events, 1);
+        }
+
+        #[ink::test]
+        fn returns_error_if_withdraw_0_funds() {
+            let mut pol_treasury = PolTreasury::new();
+            pol_treasury.deposit();
+            assert_eq!(pol_treasury.withdraw_all(), Err(Error::NoFunds));
         }
     }
 }
