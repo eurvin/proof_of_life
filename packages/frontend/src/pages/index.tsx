@@ -21,21 +21,37 @@ const HomePage: NextPage = () => {
   return (
     <>
       {/* Top Bar */}
-      <HomeTopBar />
+      <div tw="flex items-center justify-between bg-purple-500 p-3 text-white">
+        {/* Zn Logo */}
+        <div tw="font-bold text-3xl">Zn</div>
+
+        {/* Connect Wallet Button */}
+        <ConnectButton />
+      </div>
 
       <CenterBody tw="mt-20 mb-10 px-5">
         {/* Title */}
         <HomePageTitle />
 
-        {/* Connect Wallet Button */}
-        <ConnectButton />
+        {/* Statement */}
+        <div tw="mb-10 text-center font-medium text-purple-500 text-lg">
+          Zn is a revolutionary platform for creating and trading NFTs, empowering artists and
+          collectors to express themselves in ways never before possible.
+        </div>
 
-        <div tw="mt-10 flex w-full flex-wrap items-start justify-center gap-4">
+        <div tw="flex w-full flex-wrap items-start justify-center gap-4">
           {/* Chain Metadata Information */}
           <ChainInfo />
 
           {/* Greeter Read/Write Contract Interactions */}
           <GreeterContractInteractions />
+        </div>
+
+        {/* About Us Button */}
+        <div tw="fixed bottom-4 right-4">
+          <button tw="rounded-md bg-purple-500 px-4 py-2 text-white hover:bg-purple-600 focus:(outline-none ring-2 ring-purple-500 ring-offset-2)">
+            About Us
+          </button>
         </div>
       </CenterBody>
     </>
