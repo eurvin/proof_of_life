@@ -43,6 +43,7 @@ pub mod pol_nft {
         feature = "std",
         derive(scale_info::TypeInfo, ink::storage::traits::StorageLayout)
     )]
+    #[derive(Debug)]
     pub struct ValueStreamItem {
         payment_amount: u128, //could be a balance instead of u128
         already_paid: bool,
