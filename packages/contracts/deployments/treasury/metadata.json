@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x5ab658b5390f4952e9ac9586e17a867c72a8d186ee409b5b9a9ab0ab21446ead",
+    "hash": "0xa897c565e194b8a5796b8634de65ec0a29376c00b1a13f658fbf2b151442b13b",
     "language": "ink! 4.2.0",
     "compiler": "rustc 1.71.0-nightly",
     "build_info": {
@@ -16,9 +16,7 @@
   "contract": {
     "name": "treasury",
     "version": "0.0.1",
-    "authors": [
-      "Escgrow <eurvin@gmail.com>"
-    ]
+    "authors": ["Escgrow <eurvin@gmail.com>"]
   },
   "spec": {
     "constructors": [
@@ -29,10 +27,7 @@
         "label": "new",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 1
         },
         "selector": "0x9bae9d5e"
@@ -44,54 +39,37 @@
         "label": "default",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 1
         },
         "selector": "0xed4b9d1b"
       }
     ],
-    "docs": [
-      " much from https://use.ink/datastructures/mapping"
-    ],
+    "docs": [" much from https://use.ink/datastructures/mapping"],
     "environment": {
       "accountId": {
-        "displayName": [
-          "AccountId"
-        ],
+        "displayName": ["AccountId"],
         "type": 11
       },
       "balance": {
-        "displayName": [
-          "Balance"
-        ],
+        "displayName": ["Balance"],
         "type": 0
       },
       "blockNumber": {
-        "displayName": [
-          "BlockNumber"
-        ],
+        "displayName": ["BlockNumber"],
         "type": 16
       },
       "chainExtension": {
-        "displayName": [
-          "ChainExtension"
-        ],
+        "displayName": ["ChainExtension"],
         "type": 17
       },
       "hash": {
-        "displayName": [
-          "Hash"
-        ],
+        "displayName": ["Hash"],
         "type": 14
       },
       "maxEventTopics": 4,
       "timestamp": {
-        "displayName": [
-          "Timestamp"
-        ],
+        "displayName": ["Timestamp"],
         "type": 15
       }
     },
@@ -103,9 +81,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -114,9 +90,7 @@
             "indexed": true,
             "label": "new_balance",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 5
             }
           }
@@ -131,9 +105,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 10
             }
           },
@@ -142,9 +114,7 @@
             "indexed": true,
             "label": "amount",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 5
             }
           }
@@ -154,27 +124,19 @@
       }
     ],
     "lang_error": {
-      "displayName": [
-        "ink",
-        "LangError"
-      ],
+      "displayName": ["ink", "LangError"],
       "type": 3
     },
     "messages": [
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Retrieve the balance of the caller."
-        ],
+        "docs": [" Retrieve the balance of the caller."],
         "label": "get_balance",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 4
         },
         "selector": "0xea817e65"
@@ -182,17 +144,12 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Credit more money to the contract."
-        ],
+        "docs": [" Credit more money to the contract."],
         "label": "deposit",
         "mutates": true,
         "payable": true,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 1
         },
         "selector": "0x2d10c9bd"
@@ -200,17 +157,12 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Withdraw the whole balance from the contract."
-        ],
+        "docs": [" Withdraw the whole balance from the contract."],
         "label": "withdraw_all",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 6
         },
         "selector": "0x85bb29a8"
@@ -220,9 +172,7 @@
           {
             "label": "transfer_amt",
             "type": {
-              "displayName": [
-                "Balance"
-              ],
+              "displayName": ["Balance"],
               "type": 0
             }
           }
@@ -236,10 +186,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 9
         },
         "selector": "0x410fcc9d"
@@ -327,9 +274,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -353,10 +298,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "LangError"
-        ]
+        "path": ["ink_primitives", "LangError"]
       }
     },
     {
@@ -396,9 +338,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -429,9 +369,7 @@
             "type": 0
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -471,9 +409,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -513,9 +449,7 @@
             "type": 8
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -535,11 +469,7 @@
             ]
           }
         },
-        "path": [
-          "treasury",
-          "treasury",
-          "Error"
-        ]
+        "path": ["treasury", "treasury", "Error"]
       }
     },
     {
@@ -579,9 +509,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -612,9 +540,7 @@
             "type": 11
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -630,11 +556,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "AccountId"
-        ]
+        "path": ["ink_primitives", "types", "AccountId"]
       }
     },
     {
@@ -669,11 +591,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "Hash"
-        ]
+        "path": ["ink_primitives", "types", "Hash"]
       }
     },
     {
@@ -698,11 +616,7 @@
         "def": {
           "variant": {}
         },
-        "path": [
-          "ink_env",
-          "types",
-          "NoChainExtension"
-        ]
+        "path": ["ink_env", "types", "NoChainExtension"]
       }
     }
   ],
