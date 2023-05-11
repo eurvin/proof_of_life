@@ -1,5 +1,6 @@
 import { Button, Card, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react'
 import { ContractIds } from '@deployments/deployments'
+import { BN } from '@polkadot/util'
 import {
   contractQuery,
   contractTx,
@@ -58,34 +59,39 @@ export const TreasuryContractInteractions: FC = () => {
 
     setUpdateIsLoading(true)
     toast.loading('Updating deposit…', { id: `update` })
-    try {
-      // Gather form value
-      const depositMessage = form.getValues('depositMessage')
+    // Gather form value
+    const depositMessage = form.getValues('depositMessage')
+    const depositAsFloat = parseFloat(depositMessage)
+    if (isNaN(depositAsFloat)) {
+      toast.error('Please specify a number to deposit')
+    } else {
+      try {
+        /*TODO format depositMessage with the correct number of decimals. Until then,
+        //use it directly as is */
+        // Estimate gas & send transaction
+        const depositValue: BN = new BN(depositAsFloat).mul(new BN(10).pow(new BN(12)))
+        //const depositValue = depositMessage
+        //const payableOption: ContractOptions = { value: depositValue }
+        await contractTx(
+          api,
+          activeAccount.address,
+          treasuryContract,
+          'deposit',
+          { value: depositValue }, //needs to be a BN in a ContractOptions object
+          [],
+        )
 
-      /*TODO format depositMessage with the correct number of decimals. Until then,
-      //use it directly as is */
-      // Estimate gas & send transaction
-      //const depositValue: BN = new BN(depositMessage).mul(new BN(10).pow(new BN(12)))
-      const depositValue = depositMessage
-      //const payableOption: ContractOptions = { value: depositValue }
-      await contractTx(
-        api,
-        activeAccount.address,
-        treasuryContract,
-        'deposit',
-        { value: depositValue }, //needs to be a BN in a ContractOptions object
-        [],
-      )
-      toast.success(`Successfully made a deposit`)
-      form.reset()
-    } catch (e) {
-      console.log(e)
-      toast.error('Error while making a deposit. Try again.')
-      toast.error('Error ' + e)
-    } finally {
-      setUpdateIsLoading(false)
-      toast.dismiss(`update`)
-      fetchBalance() //Balance should be updated after the deposit was made.
+        toast.success(`Successfully made a deposit of value ` + depositMessage)
+        form.reset()
+      } catch (e) {
+        console.log(e)
+        toast.error('Error while making a deposit. Try again.')
+        toast.error('Error ' + e)
+      } finally {
+        setUpdateIsLoading(false)
+        toast.dismiss(`update`)
+        fetchBalance() //Balance should be updated after the deposit was made.
+      }
     }
   }
 
