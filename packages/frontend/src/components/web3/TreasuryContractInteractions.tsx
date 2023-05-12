@@ -1,10 +1,10 @@
 import { Button, Card, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react'
 import { ContractIds } from '@deployments/deployments'
-import { BN } from '@polkadot/util'
+import { BN, formatBalance } from '@polkadot/util'
 import {
   contractQuery,
   contractTx,
-  decodeOutput,
+  unwrapResultOrError,
   useInkathon,
   useRegisteredContract,
 } from '@scio-labs/use-inkathon'
@@ -22,27 +22,32 @@ export const TreasuryContractInteractions: FC = () => {
   const [fetchIsLoading, setFetchIsLoading] = useState<boolean>()
   const [updateIsLoading, setUpdateIsLoading] = useState<boolean>()
   const form = useForm<{ depositMessage: string }>()
+  const CHAIN_DECIMALS = 18
 
   // Fetch Greeting
   const fetchBalance = async () => {
-    if (!treasuryContract || !api || !isConnected) return
+    if (!treasuryContract || !api || !isConnected || !activeAccount) return
 
     setFetchIsLoading(true)
     try {
-      const result = await contractQuery(api, '', treasuryContract, 'get_balance')
-      //const balanceMessage = unwrapResultOrError<u128>(result)
+      const result = await contractQuery(
+        api,
+        activeAccount.address,
+        treasuryContract,
+        'get_balance',
+      )
+      const balanceMessage = unwrapResultOrError(result)
+      console.log(balanceMessage)
+      /*
       const { output, isError, decodedOutput } = decodeOutput(
         result,
         treasuryContract,
         'get_balance',
       )
-      console.log(output, isError, decodedOutput)
-      //TODO:set the decimals to the right number for the node when the deposit is
-      // formatted the same way too. This code is commented out here. Until then,
-      // just show it as is.
-      //const formattedBalanceMessage = formatBalance(decodedOutput, { decimals: 18 })
-
-      setBalance(JSON.stringify(output) + '  ' + decodedOutput)
+      console.log(output, isError, decodedOutput)*/
+      const theBalanceAsBN = new BN(balanceMessage) //decodedOutput)
+      const formattedBalanceMessage = formatBalance(theBalanceAsBN, { decimals: CHAIN_DECIMALS })
+      setBalance(formattedBalanceMessage)
     } catch (e) {
       console.error(e)
       toast.error('Error while fetching balance.')
@@ -54,7 +59,7 @@ export const TreasuryContractInteractions: FC = () => {
 
   useEffect(() => {
     fetchBalance()
-  }, [treasuryContract])
+  }, [treasuryContract, activeAccount])
 
   // Make a Deposit
   const makeDeposit = async () => {
@@ -73,7 +78,7 @@ export const TreasuryContractInteractions: FC = () => {
     } else {
       try {
         // Estimate gas & send transaction
-        const depositValue: BN = new BN(depositAsFloat).mul(new BN(10).pow(new BN(18)))
+        const depositValue: BN = new BN(depositAsFloat).mul(new BN(10).pow(new BN(CHAIN_DECIMALS)))
         await contractTx(
           api,
           activeAccount.address,
