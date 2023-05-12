@@ -34,7 +34,7 @@ const HomePage: NextPage = () => {
         <HomePageTitle />
 
         {/* Statement */}
-        <div tw="mb-10 text-center font-medium text-purple-500 text-lg">
+        <div tw="mb-10 text-center font-medium text-yellow-500 text-lg">
           Zn is a revolutionary platform for creating and trading NFTs, empowering artists and
           collectors to express themselves in ways never before possible.
         </div>
