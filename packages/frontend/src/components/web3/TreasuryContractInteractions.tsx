@@ -4,7 +4,7 @@ import { BN } from '@polkadot/util'
 import {
   contractQuery,
   contractTx,
-  unwrapResultOrError,
+  decodeOutput,
   useInkathon,
   useRegisteredContract,
 } from '@scio-labs/use-inkathon'
@@ -25,27 +25,33 @@ export const TreasuryContractInteractions: FC = () => {
 
   // Fetch Greeting
   const fetchBalance = async () => {
-    if (!treasuryContract || !api) return
+    if (!treasuryContract || !api || !isConnected) return
 
     setFetchIsLoading(true)
     try {
       const result = await contractQuery(api, '', treasuryContract, 'get_balance')
-      const balanceMessage = unwrapResultOrError<string>(result)
-      /*TODO:set the decimals to the right number for the node when the deposit is 
+      //const balanceMessage = unwrapResultOrError<u128>(result)
+      const { output, isError, decodedOutput } = decodeOutput(
+        result,
+        treasuryContract,
+        'get_balance',
+      )
+      console.log(output, isError, decodedOutput)
+      //TODO:set the decimals to the right number for the node when the deposit is
       // formatted the same way too. This code is commented out here. Until then,
       // just show it as is.
-      const formattedBalanceMessage = formatBalance(balanceMessage, { decimals: 18 })
-      */
-      const formattedBalanceMessage = balanceMessage
-      setBalance(formattedBalanceMessage)
+      //const formattedBalanceMessage = formatBalance(decodedOutput, { decimals: 18 })
+
+      setBalance(JSON.stringify(output) + '  ' + decodedOutput)
     } catch (e) {
       console.error(e)
-      toast.error('Error while fetching greeting. Try again…')
+      toast.error('Error while fetching balance.')
       setBalance(undefined)
     } finally {
       setFetchIsLoading(false)
     }
   }
+
   useEffect(() => {
     fetchBalance()
   }, [treasuryContract])
@@ -66,12 +72,8 @@ export const TreasuryContractInteractions: FC = () => {
       toast.error('Please specify a number to deposit')
     } else {
       try {
-        /*TODO format depositMessage with the correct number of decimals. Until then,
-        //use it directly as is */
         // Estimate gas & send transaction
-        const depositValue: BN = new BN(depositAsFloat).mul(new BN(10).pow(new BN(12)))
-        //const depositValue = depositMessage
-        //const payableOption: ContractOptions = { value: depositValue }
+        const depositValue: BN = new BN(depositAsFloat).mul(new BN(10).pow(new BN(18)))
         await contractTx(
           api,
           activeAccount.address,
@@ -87,12 +89,11 @@ export const TreasuryContractInteractions: FC = () => {
         console.log(e)
         toast.error('Error while making a deposit. Try again.')
         toast.error('Error ' + e)
-      } finally {
-        setUpdateIsLoading(false)
-        toast.dismiss(`update`)
-        fetchBalance() //Balance should be updated after the deposit was made.
       }
     }
+    setUpdateIsLoading(false)
+    toast.dismiss(`update`)
+    fetchBalance() //Balance should be updated after the deposit was made.
   }
 
   if (!treasuryContract) return null
@@ -103,12 +104,14 @@ export const TreasuryContractInteractions: FC = () => {
         <h2 tw="text-center font-mono text-gray-400">Treasury Smart Contract</h2>
 
         {/* Fetched Greeting */}
-        <Card variant="outline" p={4} bgColor="whiteAlpha.100">
-          <FormControl>
-            <FormLabel>Treasury balance</FormLabel>
-            <Input placeholder={fetchIsLoading ? 'Loading…' : balance} disabled={true} />
-          </FormControl>
-        </Card>
+        {!!isConnected && (
+          <Card variant="outline" p={4} bgColor="whiteAlpha.100">
+            <FormControl>
+              <FormLabel>My balance in Treasury</FormLabel>
+              <Input placeholder={fetchIsLoading ? 'Loading…' : balance} disabled={true} />
+            </FormControl>
+          </Card>
+        )}
 
         {/* Make A Deposit */}
         {!!isConnected && (

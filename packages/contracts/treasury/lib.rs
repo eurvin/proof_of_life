@@ -25,7 +25,7 @@ mod treasury {
 
     // Event emitted when someone withdraw
     #[ink(event)]
-    pub struct SuccessfulWithdrawl {
+    pub struct SuccessfulWithdrawal {
         #[ink(topic)]
         from: Option<AccountId>,
         #[ink(topic)]
@@ -60,9 +60,14 @@ mod treasury {
 
         /// Retrieve the balance of the caller.
         #[ink(message)]
-        pub fn get_balance(&self) -> Option<Balance> {
+        pub fn get_balance(&self) -> Result<u128, i32> {
             let caller = self.env().caller();
-            return self.balances.get(caller);
+            let caller_balance = self.balances.get(caller);
+            if caller_balance == None {
+                return Ok(0);
+            } else {
+                return Ok(caller_balance.unwrap());
+            }
         }
 
         /// Credit more money to the contract.
@@ -97,7 +102,7 @@ mod treasury {
             self.balances.remove(caller);
             self.env().transfer(caller, balance).unwrap();
             self.tvl -= balance;
-            self.env().emit_event(SuccessfulWithdrawl {
+            self.env().emit_event(SuccessfulWithdrawal {
                 from: Some(caller),
                 amount: Some(balance),
             });
@@ -129,7 +134,7 @@ mod treasury {
                 self.tvl -= transfer_amt;
             }
             ink::env::debug_println!("{}", &_message);
-            self.env().emit_event(SuccessfulWithdrawl {
+            self.env().emit_event(SuccessfulWithdrawal {
                 from: Some(caller),
                 amount: Some(balance),
             });
@@ -185,7 +190,7 @@ mod treasury {
             assert_eq!(emitted_events.len(), 1);
             assert_eq!(new_contract_balance, 1000090);
             // calls get balance with Bob and asserts 90 is credited to his account
-            assert_eq!(treasury.get_balance(), Some(90));
+            assert_eq!(treasury.get_balance(), Ok(90));
         }
 
         // We test if deposits works
@@ -195,7 +200,7 @@ mod treasury {
         fn deposit_event_works() {
             let mut treasury = Treasury::new();
             treasury.deposit();
-            assert_eq!(treasury.get_balance(), Some(0));
+            assert_eq!(treasury.get_balance(), Ok(0));
             let emitted_events = ink::env::test::recorded_events().count();
             assert_eq!(emitted_events, 1);
         }
@@ -225,7 +230,7 @@ mod treasury {
             //starting balances
             assert_eq!(init_balance_alice, Ok(1_000_000));
             assert_eq!(init_contract_balance, 1_000_000);
-            assert_eq!(treasury.get_balance(), None);
+            assert_eq!(treasury.get_balance(), Ok(0));
             //transfer in via deposit
 
             set_callee::<ink::env::DefaultEnvironment>(contract);
@@ -240,7 +245,7 @@ mod treasury {
             //post-deposit balances
             assert_eq!(post_dep_balance_alice, Ok(1_000_400));
             assert_eq!(post_dep_contract_balance, 1_000_400);
-            assert_eq!(treasury.get_balance(), Some(400));
+            assert_eq!(treasury.get_balance(), Ok(400));
 
             set_callee::<ink::env::DefaultEnvironment>(contract);
             set_caller::<ink::env::DefaultEnvironment>(accounts.alice);
@@ -254,7 +259,7 @@ mod treasury {
             assert_eq!(remaining_user_bal, 100);
             assert_eq!(post_withdrawal_balance_alice, Ok(1_000_750));
             assert_eq!(post_withdrawal_contract_balance, 1_000_750);
-            assert_eq!(treasury.get_balance(), Some(100));
+            assert_eq!(treasury.get_balance(), Ok(100));
 
             /*
             let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
