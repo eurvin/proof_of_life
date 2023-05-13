@@ -31,14 +31,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <DefaultSeo
         dangerouslySetAllPagesToNoFollow={!env.isProduction}
         dangerouslySetAllPagesToNoIndex={!env.isProduction}
-        defaultTitle="ink!athon" // TODO
-        titleTemplate="%s | ink!athon" // TODO
-        description="Substrate-based Smart Contract & DApp Development Boilerplate" // TODO
+        defaultTitle="Proof of life" // TODO
+        titleTemplate="%s | proudly built with ink!athon" // TODO
+        description="A Substrate-based dApp to create streaming payments" // TODO
         openGraph={{
           type: 'website',
           locale: 'en',
           url: env.url,
-          site_name: 'ink!athon', // TODO
+          site_name: 'Proof of life', // TODO
           images: [
             {
               url: `${env.url}/images/cover.jpg`, // TODO
@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           ],
         }}
         twitter={{
-          handle: '@scio_xyz', // TODO
+          handle: '', // TODO
         }}
       />
 
