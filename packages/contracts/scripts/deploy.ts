@@ -3,7 +3,6 @@ import * as dotenv from 'dotenv'
 import { getDeploymentData } from './utils/getDeploymentData'
 import { initPolkadotJs } from './utils/initPolkadotJs'
 import { writeContractAddresses } from './utils/writeContractAddresses'
-import {treasury} from '@polkadot/types/interfaces/definitions';
 dotenv.config({ path: `.env.${process.env.CHAIN}` })
 
 const main = async () => {
@@ -17,12 +16,30 @@ const main = async () => {
   const { address: greeterAddress } = await deployContract(api, account, abi, wasm, 'default', [])
 
   let { abi: abiTreasury, wasm: wasmTreasury } = await getDeploymentData('treasury')
-  const { address: treasuryAddress } = await deployContract(api, account, abiTreasury, wasmTreasury, 'default', [])
+  const { address: treasuryAddress } = await deployContract(
+    api,
+    account,
+    abiTreasury,
+    wasmTreasury,
+    'default',
+    [],
+  )
+
+  let { abi: abiPolNft, wasm: wasmPolNft } = await getDeploymentData('pol_nft')
+  const { address: polNftAddress } = await deployContract(
+    api,
+    account,
+    abiPolNft,
+    wasmPolNft,
+    'new',
+    [],
+  )
 
   // Write contract addresses to `{contract}/{network}.ts` files
   await writeContractAddresses(chain.network, {
     greeter: greeterAddress,
-    treasury: treasuryAddress
+    treasury: treasuryAddress,
+    pol_nft: polNftAddress,
   })
 }
 

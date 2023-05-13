@@ -1,12 +1,12 @@
 {
   "source": {
-    "hash": "0x7467be8608aa19860a838891dd0171b853c1192ebf63b3046f399aa59b5f6b95",
+    "hash": "0xea3f7be417ee1b25b38b5ce174d75051d76f03dd0af2ce50c83ac16650ea1985",
     "language": "ink! 4.2.0",
-    "compiler": "rustc 1.69.0",
+    "compiler": "rustc 1.71.0-nightly",
     "build_info": {
       "build_mode": "Release",
-      "cargo_contract_version": "2.2.1",
-      "rust_toolchain": "stable-x86_64-unknown-linux-gnu",
+      "cargo_contract_version": "2.1.0",
+      "rust_toolchain": "nightly-x86_64-unknown-linux-gnu",
       "wasm_opt_settings": {
         "keep_debug_symbols": false,
         "optimization_passes": "Z"
@@ -16,9 +16,7 @@
   "contract": {
     "name": "treasury",
     "version": "0.0.1",
-    "authors": [
-      "Escgrow <eurvin@gmail.com>"
-    ]
+    "authors": ["Escgrow <eurvin@gmail.com>"]
   },
   "spec": {
     "constructors": [
@@ -29,10 +27,7 @@
         "label": "new",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 1
         },
         "selector": "0x9bae9d5e"
@@ -44,54 +39,37 @@
         "label": "default",
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
+          "displayName": ["ink_primitives", "ConstructorResult"],
           "type": 1
         },
         "selector": "0xed4b9d1b"
       }
     ],
-    "docs": [
-      " much from https://use.ink/datastructures/mapping"
-    ],
+    "docs": [" much from https://use.ink/datastructures/mapping"],
     "environment": {
       "accountId": {
-        "displayName": [
-          "AccountId"
-        ],
+        "displayName": ["AccountId"],
         "type": 9
       },
       "balance": {
-        "displayName": [
-          "Balance"
-        ],
+        "displayName": ["Balance"],
         "type": 0
       },
       "blockNumber": {
-        "displayName": [
-          "BlockNumber"
-        ],
+        "displayName": ["BlockNumber"],
         "type": 15
       },
       "chainExtension": {
-        "displayName": [
-          "ChainExtension"
-        ],
+        "displayName": ["ChainExtension"],
         "type": 16
       },
       "hash": {
-        "displayName": [
-          "Hash"
-        ],
+        "displayName": ["Hash"],
         "type": 13
       },
       "maxEventTopics": 4,
       "timestamp": {
-        "displayName": [
-          "Timestamp"
-        ],
+        "displayName": ["Timestamp"],
         "type": 14
       }
     },
@@ -103,9 +81,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 8
             }
           },
@@ -114,9 +90,7 @@
             "indexed": true,
             "label": "new_balance",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 12
             }
           }
@@ -131,9 +105,7 @@
             "indexed": true,
             "label": "from",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 8
             }
           },
@@ -142,9 +114,7 @@
             "indexed": true,
             "label": "amount",
             "type": {
-              "displayName": [
-                "Option"
-              ],
+              "displayName": ["Option"],
               "type": 12
             }
           }
@@ -154,27 +124,19 @@
       }
     ],
     "lang_error": {
-      "displayName": [
-        "ink",
-        "LangError"
-      ],
+      "displayName": ["ink", "LangError"],
       "type": 3
     },
     "messages": [
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Retrieve the balance of the caller."
-        ],
+        "docs": [" Retrieve the balance of the caller."],
         "label": "get_balance",
         "mutates": false,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 4
         },
         "selector": "0xea817e65"
@@ -182,17 +144,12 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Credit more money to the contract."
-        ],
+        "docs": [" Credit more money to the contract."],
         "label": "deposit",
         "mutates": true,
         "payable": true,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 1
         },
         "selector": "0x2d10c9bd"
@@ -200,17 +157,12 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Withdraw the whole balance from the contract."
-        ],
+        "docs": [" Withdraw the whole balance from the contract."],
         "label": "withdraw_all",
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 5
         },
         "selector": "0x85bb29a8"
@@ -220,9 +172,7 @@
           {
             "label": "transfer_amt",
             "type": {
-              "displayName": [
-                "Balance"
-              ],
+              "displayName": ["Balance"],
               "type": 0
             }
           }
@@ -236,10 +186,7 @@
         "mutates": true,
         "payable": false,
         "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
+          "displayName": ["ink", "MessageResult"],
           "type": 4
         },
         "selector": "0x410fcc9d"
@@ -327,9 +274,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -353,10 +298,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "LangError"
-        ]
+        "path": ["ink_primitives", "LangError"]
       }
     },
     {
@@ -396,9 +338,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -438,9 +378,7 @@
             "type": 3
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -480,9 +418,7 @@
             "type": 7
           }
         ],
-        "path": [
-          "Result"
-        ]
+        "path": ["Result"]
       }
     },
     {
@@ -502,11 +438,7 @@
             ]
           }
         },
-        "path": [
-          "treasury",
-          "treasury",
-          "Error"
-        ]
+        "path": ["treasury", "treasury", "Error"]
       }
     },
     {
@@ -537,9 +469,7 @@
             "type": 9
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -555,11 +485,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "AccountId"
-        ]
+        "path": ["ink_primitives", "types", "AccountId"]
       }
     },
     {
@@ -609,9 +535,7 @@
             "type": 0
           }
         ],
-        "path": [
-          "Option"
-        ]
+        "path": ["Option"]
       }
     },
     {
@@ -627,11 +551,7 @@
             ]
           }
         },
-        "path": [
-          "ink_primitives",
-          "types",
-          "Hash"
-        ]
+        "path": ["ink_primitives", "types", "Hash"]
       }
     },
     {
@@ -656,11 +576,7 @@
         "def": {
           "variant": {}
         },
-        "path": [
-          "ink_env",
-          "types",
-          "NoChainExtension"
-        ]
+        "path": ["ink_env", "types", "NoChainExtension"]
       }
     }
   ],
