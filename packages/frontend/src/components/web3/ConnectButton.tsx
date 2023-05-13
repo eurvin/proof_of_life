@@ -109,7 +109,7 @@ export const ConnectButton: FC<ConnectButtonProps> = () => {
       <HStack>
         {balanceFormatted !== undefined && (
           <Button py={6} pl={5} rounded="2xl" fontWeight="bold" fontSize="sm" pointerEvents="none">
-            {balanceFormatted}
+            Account balance at session start: {balanceFormatted}
           </Button>
         )}
         <MenuButton
