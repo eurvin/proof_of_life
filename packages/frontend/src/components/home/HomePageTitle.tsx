@@ -1,10 +1,4 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import inkathonLogo from 'public/brand/inkathon-logo.png'
-import githubIcon from 'public/icons/github-button.svg'
-import sponsorIcon from 'public/icons/sponsor-button.svg'
-import telegramIcon from 'public/icons/telegram-button.svg'
-import vercelIcon from 'public/icons/vercel-button.svg'
 import { FC } from 'react'
 import 'twin.macro'
 import tw, { styled } from 'twin.macro'
@@ -21,5 +15,11 @@ export const HomePageTitle: FC = () => {
   const sponsorHref = 'mailto:hello@scio.xyz'
   const telegramHref = 'https://t.me/inkathon'
 
-  return <></>
+  return (
+    <>
+      <div tw="mb-5 text-center font-bold text-gray-200 text-3xl">
+        Welcome to the Proof of Life dApp!
+      </div>
+    </>
+  )
 }

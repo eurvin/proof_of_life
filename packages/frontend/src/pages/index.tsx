@@ -1,8 +1,6 @@
 import { HomePageTitle } from '@components/home/HomePageTitle'
 import { CenterBody } from '@components/layout/CenterBody'
-import { ChainInfo } from '@components/web3/ChainInfo'
 import { ConnectButton } from '@components/web3/ConnectButton'
-import { GreeterContractInteractions } from '@components/web3/GreeterContractInteractions'
 import { TreasuryContractInteractions } from '@components/web3/TreasuryContractInteractions'
 import { useInkathon } from '@scio-labs/use-inkathon'
 import type { NextPage } from 'next'
@@ -23,7 +21,8 @@ const HomePage: NextPage = () => {
       {/* Top Bar */}
       <div tw="flex items-center justify-between bg-purple-500 p-3 text-white">
         {/* Zn Logo */}
-        <div tw="font-bold text-3xl">Zn</div>
+        <div tw="font-bold text-2xl">Zn</div>
+        <div tw="font-bold text-3xl">Proof of Life</div>
 
         {/* Connect Wallet Button */}
         <ConnectButton />
@@ -33,20 +32,26 @@ const HomePage: NextPage = () => {
         {/* Title */}
         <HomePageTitle />
 
-        {/* Statement */}
-        <div tw="mb-10 text-center font-medium text-purple-500 text-lg">
-          Zn is a revolutionary platform for creating and trading NFTs, empowering artists and
-          collectors to express themselves in ways never before possible.
+        <div tw="mb-5 text-center font-medium text-gray-500 text-lg">
+          With Proof of Life, you as parent or guardian can get regular indications that all&apos;s
+          well with your dependent.
+          <br /> Receive notifications whenever they accept a pre-scheduled transfer from you
+          <div tw="mb-0 text-center font-medium text-gray-200 text-lg">
+            \/ Start Now - set up your treasury and transfer schedule here! \/
+          </div>
         </div>
 
         <div tw="flex w-full flex-wrap items-start justify-center gap-4">
           {/* Chain Metadata Information */}
-          <ChainInfo />
-
-          {/* Greeter Read/Write Contract Interactions */}
-          <GreeterContractInteractions />
+          {/* <ChainInfo />*/}
           {/* Treasury Contract Interactions */}
           <TreasuryContractInteractions />
+        </div>
+
+        {/* Statement */}
+        <div tw="mb-10 text-center font-medium text-purple-500 text-lg">
+          Zn is a revolutionary platform for creating and trading NFTs, empowering artists and
+          collectors to express themselves in ways never before possible.
         </div>
 
         {/* About Us Button */}
