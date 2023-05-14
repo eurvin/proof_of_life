@@ -5,7 +5,7 @@ sidebar_position: 1
 # Proof of Life Intro & How-to
 
 Thank you for your interest in **Proof of Life**.
-The fun yet practial _Proof of Life_ dApp is designed for parents &
+The fun yet practical _Proof of Life_ dApp is designed for parents &
 guardians of late teen / early 20s children that live away from home.
 These young adults may not yet be fully financially independent (e.g.
 in 3rd level education or travelling) so they may require money transfers
@@ -20,7 +20,8 @@ series of regular payments to a dependent. When the dependent claims the
 payment, the adult sees that it was claimed, and so knows that the child is
 alive and well!
 
-_Proof of Life_ makes use of WASM smart contracts by _Zink_ for interative value transfer.
+_Proof of Life_ makes use of WASM smart contracts on our _Zink_ platform for
+interative value transfer.
 
 ## Getting Started
 
@@ -85,3 +86,8 @@ see the list in your incoming Streams.
 - Any stream not currently claimable shows the approximate duration until
   the next iteration can be claimed.
 - Claiming notifies the payment stream creator that you have claimed.
+
+### Outgoing Streams.
+
+This shows your streams that you have wrapped and sent to others. It shows if they
+have claimed, and if so how long ago it was since they claimed. This is your Proof of Life!
