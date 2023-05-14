@@ -2,46 +2,86 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Proof of Life Intro & How-to
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Thank you for your interest in **Proof of Life**.
+The fun yet practial _Proof of Life_ dApp is designed for parents &
+guardians of late teen / early 20s children that live away from home.
+These young adults may not yet be fully financially independent (e.g.
+in 3rd level education or travelling) so they may require money transfers
+at different periods.
+
+Many parents & guardians love hearing from their children when they're away,
+yet the children are busy and otherwise independent. So they may not contact
+home as often as parents would like!
+<br />
+This is where Proof of Life shines. It allows parents & guardians to set up a
+series of regular payments to a dependent. When the dependent claims the
+payment, the adult sees that it was claimed, and so knows that the child is
+alive and well!
+
+_Proof of Life_ makes use of WASM smart contracts by _Zink_ for interative value transfer.
 
 ## Getting Started
 
-Get started by **creating a new site**.
+Get started by **opening the dApp**.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### Connect
 
-### What you'll need
+1. Connect your wallet on the top right:
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+![Unconnected](./img/1_connect_wallet.png)
 
-## Generate a new site
+You can see your starting account balance of native tokens immediately to the
+left of the wallet.
 
-Generate a new Docusaurus site using the **classic template**.
+![Connected with Chain Balance](./img/2_ac_bal_session_start.png)
 
-The classic template will automatically be added to your project after you run the command:
+In the main pane, you can see your treasury balance. This will have a number
+if you've previously deposited any funds to treasury, otherwise it'll be blank:
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+![Initial treasury Balance](./img/3_treasury_balance_start.png)
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+### Deposit
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+Deposit value your treasury for transfer. The max you can deposit cannot exceed
+your on-chain token balance, at the top right (See connect step above):
 
-## Start your site
+![Deposit to treasury](./img/4_deposit.png)
 
-Run the development server:
+You will see that your treasury balance
+had changed:
 
-```bash
-cd my-website
-npm run start
-```
+![Updated treasury balance](./img/5_post_deposit_bal.png)
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+### Create a Stream
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+Then you can create a stream by clicking on create a stream:
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+![Create a stream](./img/7_create_new_stream.png)
+
+- Set a payment amount, time between payments, number of iterations and recipient address
+- Add the stream (Note that this is a mockup at present)
+
+![Add this new stream](./img/8_add_this_new_stream.png)
+
+This is added to your list of outgoing streams. When a payment is claimed by the
+recipient, the dApp shows you that a claim was made.
+
+You can create multiple varying streams, even for the same recipient.
+
+### Existing Streams
+
+This is a view of how existing streams, incoming and outgoing, are shown:
+
+![Add this new stream](./img/6_existing_streams.png)
+
+### Incoming Streams.
+
+If you are the lucky recipient of one or more streams, once connected, you can
+see the list in your incoming Streams.
+
+- For any streams where a payment iteration is now claimable, you can click claim.
+- Any stream not currently claimable shows the approximate duration until
+  the next iteration can be claimed.
+- Claiming notifies the payment stream creator that you have claimed.
