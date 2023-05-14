@@ -116,8 +116,10 @@ export const NFTStreamsMockup: FC = () => {
                 >
                   <Button m={2} colorScheme="purple" type="button" disabled={true} padding={'2'}>
                     4 x 12
-                  </Button>{' '}
-                  <span>&nbsp;to 5gw....lse&nbsp;&nbsp;</span>
+                  </Button>
+                  <Button opacity={'0.4'} colorScheme="telegram" type="button" disabled={true}>
+                    Claimed 2 days ago by 5gw....lse
+                  </Button>
                   <Button m={2} colorScheme="purple" type="button" disabled={false} float={'right'}>
                     Stop
                   </Button>
