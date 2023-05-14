@@ -1,13 +1,14 @@
-import { HomePageTitle } from '@components/home/HomePageTitle'
 import { AboutUs } from '@components/about/AboutUs'
+import { HomePageTitle } from '@components/home/HomePageTitle'
+import { HomeTopBar } from '@components/home/HomeTopBar'
 import { CenterBody } from '@components/layout/CenterBody'
+import { NFTStreamsMockup } from '@components/web3/NFTStreamsMockup'
 import { TreasuryContractInteractions } from '@components/web3/TreasuryContractInteractions'
 import { useInkathon } from '@scio-labs/use-inkathon'
 import type { NextPage } from 'next'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import 'twin.macro'
-import { HomeTopBar } from '@components/home/HomeTopBar'
 
 const HomePage: NextPage = () => {
   // Display `useInkathon` error messages (optional)
@@ -40,12 +41,7 @@ const HomePage: NextPage = () => {
           {/* <ChainInfo />*/}
           {/* Treasury Contract Interactions */}
           <TreasuryContractInteractions />
-        </div>
-
-        {/* Statement */}
-        <div tw="mb-10 text-center font-medium text-purple-500 text-lg">
-          Zn is a revolutionary platform for creating and trading NFTs, empowering artists and
-          collectors to express themselves in ways never before possible.
+          <NFTStreamsMockup />
         </div>
 
         {/* About Us Button */}

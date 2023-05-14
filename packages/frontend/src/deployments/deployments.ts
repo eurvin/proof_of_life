@@ -4,6 +4,7 @@ import { SubstrateDeployment } from '@scio-labs/use-inkathon'
 export enum ContractIds {
   Greeter = 'greeter',
   Treasury = 'treasury',
+  PolNFT = 'pol_nft',
 }
 
 export const getDeployments = async (): Promise<SubstrateDeployment[]> => {
@@ -21,6 +22,12 @@ export const getDeployments = async (): Promise<SubstrateDeployment[]> => {
         networkId: network,
         abi: await import(`@inkathon/contracts/deployments/treasury/metadata.json`),
         address: (await import(`@inkathon/contracts/deployments/treasury/${network}.ts`)).address,
+      },
+      {
+        contractId: ContractIds.PolNFT,
+        networkId: network,
+        abi: await import(`@inkathon/contracts/deployments/pol_nft/metadata.json`),
+        address: (await import(`@inkathon/contracts/deployments/pol_nft/${network}.ts`)).address,
       },
     ])
     .reduce(async (acc, curr) => [...(await acc), ...(await curr)], [] as any)
