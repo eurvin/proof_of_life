@@ -1,6 +1,8 @@
+import { AboutUs } from '@components/about/AboutUs'
 import { HomePageTitle } from '@components/home/HomePageTitle'
+import { HomeTopBar } from '@components/home/HomeTopBar'
 import { CenterBody } from '@components/layout/CenterBody'
-import { ConnectButton } from '@components/web3/ConnectButton'
+import { NFTStreamsMockup } from '@components/web3/NFTStreamsMockup'
 import { TreasuryContractInteractions } from '@components/web3/TreasuryContractInteractions'
 import { useInkathon } from '@scio-labs/use-inkathon'
 import type { NextPage } from 'next'
@@ -19,14 +21,7 @@ const HomePage: NextPage = () => {
   return (
     <>
       {/* Top Bar */}
-      <div tw="flex items-center justify-between bg-purple-500 p-3 text-white">
-        {/* Zn Logo */}
-        <div tw="font-bold text-2xl">Zn</div>
-        <div tw="font-bold text-3xl">Proof of Life</div>
-
-        {/* Connect Wallet Button */}
-        <ConnectButton />
-      </div>
+      <HomeTopBar />
 
       <CenterBody tw="mt-20 mb-10 px-5">
         {/* Title */}
@@ -46,19 +41,12 @@ const HomePage: NextPage = () => {
           {/* <ChainInfo />*/}
           {/* Treasury Contract Interactions */}
           <TreasuryContractInteractions />
-        </div>
-
-        {/* Statement */}
-        <div tw="mb-10 text-center font-medium text-purple-500 text-lg">
-          Zn is a revolutionary platform for creating and trading NFTs, empowering artists and
-          collectors to express themselves in ways never before possible.
+          <NFTStreamsMockup />
         </div>
 
         {/* About Us Button */}
         <div tw="fixed bottom-4 right-4">
-          <button tw="rounded-md bg-purple-500 px-4 py-2 text-white hover:bg-purple-600 focus:(outline-none ring-2 ring-purple-500 ring-offset-2)">
-            About Us
-          </button>
+          <AboutUs tw="rounded-md bg-purple-500 px-4 py-2 text-white hover:bg-purple-600 focus:(outline-none ring-2 ring-purple-500 ring-offset-2)" />
         </div>
       </CenterBody>
     </>
